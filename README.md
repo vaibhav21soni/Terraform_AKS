@@ -1,6 +1,5 @@
 # Multi-Environment Azure Kubernetes Service (AKS) Terraform Module
 
-This is a comprehensive, modular Terraform configuration for deploying Azure Kubernetes Service (AKS) clusters across multiple environments with dynamic resource management using `for_each`, `count`, conditional logic, and **simplified Terraform workspaces**.
 
 ## 🏗️ Architecture
 

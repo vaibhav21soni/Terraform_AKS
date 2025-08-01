@@ -410,4 +410,4 @@ Changes to Outputs:
 
 ---
 
-> **Note**: This plan output has been sanitized to remove sensitive information like tenant IDs, subscription IDs, and client configuration details. All dependency issues have been resolved and the infrastructure is ready for deployment.
+> **Note**: This plan output has been sanitized to remove sensitive information like tenant IDs, subscription IDs, and client configuration details. 

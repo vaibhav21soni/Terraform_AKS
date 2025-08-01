@@ -1,8 +1,5 @@
 # Azure Backend Setup Guide
 
-## 🔄 Backend Configuration Restored
-
-The Terraform configuration has been switched back to use **Azure Blob Storage** as the backend for production use.
 
 ## 📋 Prerequisites
 
