@@ -159,7 +159,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "additional" {
 
 # Role Assignment for ACR
 resource "azurerm_role_assignment" "aks_acr" {
-  count = var.acr_id != null ? 1 : 0
+  count = var.enable_acr_integration ? 1 : 0
 
   principal_id                     = azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
   role_definition_name             = "AcrPull"

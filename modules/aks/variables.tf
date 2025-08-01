@@ -117,6 +117,12 @@ variable "enable_oidc_issuer" {
   default     = false
 }
 
+variable "enable_acr_integration" {
+  description = "Enable ACR integration with AKS"
+  type        = bool
+  default     = false
+}
+
 variable "acr_id" {
   description = "ID of the Azure Container Registry"
   type        = string

@@ -217,10 +217,7 @@ resource "azurerm_private_endpoint" "file" {
 
 # Diagnostic Settings (optional)
 resource "azurerm_monitor_diagnostic_setting" "main" {
-  for_each = {
-    for sa_key, sa_config in var.storage_accounts : sa_key => sa_config
-    if var.log_analytics_workspace_id != null
-  }
+  for_each = var.enable_diagnostic_settings ? var.storage_accounts : {}
 
   name                       = "${each.key}-${var.environment}-diag"
   target_resource_id         = azurerm_storage_account.main[each.key].id

@@ -8,6 +8,17 @@
 terraform.tfvars.backup
 *.backup
 
+# Local state files (ensure these are never committed)
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
+
+# Temporary backend override files
+backend_override.tf
+*_override.tf
+
+# Terraform variable files (uncomment if you want to ignore all .tfvars files)
+
 # Terraform variable files (uncomment if you want to ignore all .tfvars files)
 # *.tfvars
 # *.tfvars.json

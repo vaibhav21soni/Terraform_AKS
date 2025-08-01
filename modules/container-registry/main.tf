@@ -102,7 +102,7 @@ resource "azurerm_private_endpoint" "main" {
 
 # Diagnostic Settings
 resource "azurerm_monitor_diagnostic_setting" "main" {
-  count = var.log_analytics_workspace_id != null ? 1 : 0
+  count = var.enable_diagnostic_settings ? 1 : 0
 
   name                       = "${var.acr_name}-${var.environment}-diag"
   target_resource_id         = azurerm_container_registry.main.id

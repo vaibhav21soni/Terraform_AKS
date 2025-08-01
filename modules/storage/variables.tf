@@ -115,6 +115,12 @@ variable "file_private_dns_zone_id" {
   default     = null
 }
 
+variable "enable_diagnostic_settings" {
+  description = "Enable diagnostic settings for Storage Accounts"
+  type        = bool
+  default     = false
+}
+
 variable "log_analytics_workspace_id" {
   description = "Log Analytics workspace ID for diagnostic settings"
   type        = string

@@ -92,7 +92,8 @@ module "container_registry" {
   webhooks                        = lookup(each.value.container_registry, "webhooks", {})
 
   # Monitoring
-  log_analytics_workspace_id      = module.monitoring[each.key].log_analytics_workspace_id
+  enable_diagnostic_settings     = lookup(each.value.container_registry, "enable_diagnostic_settings", false)
+  log_analytics_workspace_id     = lookup(each.value.container_registry, "enable_diagnostic_settings", false) ? module.monitoring[each.key].log_analytics_workspace_id : null
 
   tags = merge(local.common_tags, each.value.tags, { Environment = each.key })
 
@@ -116,7 +117,8 @@ module "storage" {
   file_private_dns_zone_id   = lookup(each.value, "dns", null) != null ? try(module.dns[each.key].storage_private_dns_zone_id, null) : null
 
   # Monitoring
-  log_analytics_workspace_id = module.monitoring[each.key].log_analytics_workspace_id
+  enable_diagnostic_settings = lookup(each.value, "enable_storage_diagnostic_settings", false)
+  log_analytics_workspace_id = lookup(each.value, "enable_storage_diagnostic_settings", false) ? module.monitoring[each.key].log_analytics_workspace_id : null
 
   tags = merge(local.common_tags, each.value.tags, { Environment = each.key })
 
@@ -196,7 +198,8 @@ module "aks" {
   log_analytics_workspace_id = module.monitoring[each.key].log_analytics_workspace_id
 
   # Container Registry
-  acr_id = try(module.container_registry[each.key].acr_id, null)
+  enable_acr_integration = lookup(each.value, "container_registry", {}) != {} && lookup(each.value.container_registry, "enabled", false)
+  acr_id = lookup(each.value, "container_registry", {}) != {} && lookup(each.value.container_registry, "enabled", false) ? try(module.container_registry[each.key].acr_id, null) : null
 
   tags = merge(local.common_tags, each.value.tags, { Environment = each.key })
 
