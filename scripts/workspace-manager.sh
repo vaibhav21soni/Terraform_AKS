@@ -76,8 +76,8 @@ setup_azure_backend() {
     read -p "Enter resource group name for Terraform state (default: rg-terraform-state): " STATE_RG
     STATE_RG=${STATE_RG:-rg-terraform-state}
     
-    read -p "Enter storage account name for Terraform state (default: stterraformstate): " STATE_SA
-    STATE_SA=${STATE_SA:-stterraformstate}
+    read -p "Enter storage account name for Terraform state (default: vaibhavtfstate): " STATE_SA
+    STATE_SA=${STATE_SA:-vaibhavtfstate}
     
     read -p "Enter container name for Terraform state (default: tfstate): " STATE_CONTAINER
     STATE_CONTAINER=${STATE_CONTAINER:-tfstate}

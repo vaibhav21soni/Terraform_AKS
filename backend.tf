@@ -5,10 +5,10 @@ terraform {
   backend "azurerm" {
     # Static backend configuration - workspace will be appended to key automatically
     resource_group_name  = "rg-terraform-state"
-    storage_account_name = "stterraformstate"
+    storage_account_name = "vaibhavtfstate"
     container_name       = "tfstate"
     key                  = "aks/terraform.tfstate"
-
+    
     # Terraform automatically appends workspace name to the key:
     # - default workspace: aks/terraform.tfstate
     # - dev workspace: aks/env:/dev/terraform.tfstate
