@@ -9,7 +9,7 @@ resource "azurerm_container_registry" "main" {
   admin_enabled       = var.admin_enabled
 
   dynamic "georeplications" {
-    for_each = var.georeplication_locations
+    for_each = var.acr_sku == "Premium" ? var.georeplication_locations : []
     content {
       location                = georeplications.value.location
       zone_redundancy_enabled = georeplications.value.zone_redundancy_enabled
@@ -18,7 +18,7 @@ resource "azurerm_container_registry" "main" {
   }
 
   dynamic "network_rule_set" {
-    for_each = var.network_rule_set != null ? [var.network_rule_set] : []
+    for_each = var.acr_sku == "Premium" && var.network_rule_set != null ? [var.network_rule_set] : []
     content {
       default_action = network_rule_set.value.default_action
 
@@ -41,41 +41,41 @@ resource "azurerm_container_registry" "main" {
   }
 
   public_network_access_enabled = var.public_network_access_enabled
-  quarantine_policy_enabled     = var.quarantine_policy_enabled
+  quarantine_policy_enabled     = var.acr_sku == "Premium" ? var.quarantine_policy_enabled : false
 
-  # Identity for ACR Tasks and other features
+  # Identity for ACR Tasks and other features (Premium only)
   dynamic "identity" {
-    for_each = var.identity_type != null ? [1] : []
+    for_each = var.acr_sku == "Premium" && var.identity_type != null ? [1] : []
     content {
       type         = var.identity_type
       identity_ids = var.identity_type == "UserAssigned" ? var.identity_ids : null
     }
   }
 
-  # Encryption configuration
+  # Encryption configuration (Premium only)
   dynamic "encryption" {
-    for_each = var.encryption_enabled ? [1] : []
+    for_each = var.acr_sku == "Premium" && var.encryption_enabled ? [1] : []
     content {
       key_vault_key_id   = var.encryption_key_vault_key_id
       identity_client_id = var.encryption_identity_client_id
     }
   }
 
-  # Anonymous pull access
-  anonymous_pull_enabled = var.anonymous_pull_enabled
+  # Anonymous pull access (Premium only)
+  anonymous_pull_enabled = var.acr_sku == "Premium" ? var.anonymous_pull_enabled : false
 
-  # Data endpoint enabled
-  data_endpoint_enabled = var.data_endpoint_enabled
+  # Data endpoint enabled (Premium only)
+  data_endpoint_enabled = var.acr_sku == "Premium" ? var.data_endpoint_enabled : false
 
-  # Network rule bypass
-  network_rule_bypass_option = var.network_rule_bypass_option
+  # Network rule bypass (Premium only)
+  network_rule_bypass_option = var.acr_sku == "Premium" ? var.network_rule_bypass_option : "AzureServices"
 
   tags = var.tags
 }
 
-# Private Endpoint for Container Registry
+# Private Endpoint for Container Registry (Premium only)
 resource "azurerm_private_endpoint" "main" {
-  count = var.enable_private_endpoint ? 1 : 0
+  count = var.acr_sku == "Premium" && var.enable_private_endpoint ? 1 : 0
 
   name                = "${var.acr_name}-${var.environment}-pe"
   location            = var.location
